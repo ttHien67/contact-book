@@ -99,7 +99,7 @@ exports.delete = async (req, res, next) => {
 };
 
 // Find all favorite contacts of a user
-exports.findAllFavorite = async (req, res, next) => {
+exports.findAllFavorite = async (_req, res, next) => {
     try{
         const contactService = new ContactService(MongoDB.client);
         const documents = await contactService.findFavorite();
@@ -117,13 +117,13 @@ exports.findAllFavorite = async (req, res, next) => {
 };
 
 // Delete all contacts of user from the database
-exports.deleteAll = async (req, res, next) => {
+exports.deleteAll = async (_req, res, next) => {
     try{
         const contactService = new ContactService(MongoDB.client);
-        const deleteCount = await contactService.deleteAll().length;
+        const deletedCount = await contactService.deleteAll();
 
         return res.send({
-            message: `${deleteCount} contacts were deleted successfully`,
+            message: `${deletedCount} contacts were deleted successfully`,
         })
     }catch(error){
         return next(
